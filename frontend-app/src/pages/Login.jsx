@@ -8,7 +8,14 @@ const Login = () => {
   const navigate = useNavigate();
   const { isAuthenticated, login } = useContext(AuthContext);
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/dashboard';
+
+  // Tentukan tujuan redirect. 
+  // Jika user datang dari root (/) atau tidak ada history, paksa ke /dashboard.
+  // Jika user mencoba akses halaman spesifik (misal /users) lalu diminta login, arahkan kembali ke sana.
+  const from = (!location.state?.from || location.state?.from?.pathname === '/') 
+    ? '/dashboard' 
+    : location.state.from.pathname;
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
