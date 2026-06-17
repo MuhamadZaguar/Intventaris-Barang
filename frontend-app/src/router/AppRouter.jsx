@@ -7,6 +7,7 @@ import DashboardStock from '../pages/DashboardStock';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import RequireAuth from '../components/RequireAuth';
+import Barang from '../pages/Barang';
 import BarangMasuk from '../pages/BarangMasuk';
 import BarangKeluar from '../pages/BarangKeluar';
 
@@ -30,8 +31,8 @@ const AppRouter = () => {
           <Route path="dashboard/transactions" element={<DashboardTransactions />} />
           <Route path="dashboard/stock" element={<DashboardStock />} />
           
-          {/* Placeholder sementara untuk halaman lain agar tidak error saat diklik */}
-          <Route path="barang" element={<div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h2 className="text-xl font-bold">Halaman Data Barang</h2><p className="text-gray-500 text-sm mt-1">Segera hadir.</p></div>} />
+          {/* Halaman Data Barang */}
+          <Route path="barang" element={<Barang />} />
           <Route path="barang-masuk" element={<BarangMasuk />} />
           <Route path="barang-keluar" element={<BarangKeluar />} />
         </Route>
