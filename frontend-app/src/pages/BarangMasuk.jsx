@@ -13,8 +13,11 @@ const BarangMasuk = () => {
 	const loadBarang = async () => {
 		try {
 			const res = await barangService.getAll();
-			setBarangList(res.data || []);
-				if ((res.data || []).length > 0) setSelectedBarang(res.data[0]._id);
+			// support backend paginated response { data, meta }
+			const payload = res.data && res.data.data ? res.data.data : res.data;
+			const arr = Array.isArray(payload) ? payload : [];
+			setBarangList(arr);
+			if (arr.length > 0) setSelectedBarang(arr[0]._id);
 		} catch (err) {
 			console.error(err);
 			setError('Gagal memuat daftar barang');

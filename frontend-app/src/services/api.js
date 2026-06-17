@@ -24,8 +24,9 @@ export const dashboardService = {
 };
 
 export const barangService = {
-  getAll: async () => {
-    return await api.get('/barang');
+  getAll: async (params = {}) => {
+    // params: { page, limit, search, kategori }
+    return await api.get('/barang', { params });
   }
 };
 

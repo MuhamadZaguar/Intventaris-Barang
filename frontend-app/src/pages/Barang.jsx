@@ -5,6 +5,11 @@ import { barangService, barangAdminService } from '../services/api';
 const Barang = () => {
   const [barangList, setBarangList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterKategori, setFilterKategori] = useState('');
 
   // form state
   const [kode, setKode] = useState('');
@@ -17,9 +22,15 @@ const Barang = () => {
   const [error, setError] = useState(null);
 
   const fetchList = async () => {
+    setLoading(true);
     try {
-      const response = await barangService.getAll();
-      setBarangList(response.data);
+      const response = await barangService.getAll({ page, limit, search: searchTerm, kategori: filterKategori });
+      // response.data: { data, meta }
+      // backend returns { data, meta } when pagination enabled
+      const payload = response.data && response.data.data ? response.data.data : response.data;
+      setBarangList(payload || []);
+      const meta = response.data.meta || {};
+      setTotalPages(meta.totalPages || 1);
     } catch (err) {
       console.error(err);
     } finally {
@@ -31,11 +42,23 @@ const Barang = () => {
     fetchList();
   }, []);
 
+  // refetch when page/limit/search/kategori changes
+  useEffect(() => {
+    fetchList();
+  }, [page, limit, searchTerm, filterKategori]);
+
   const handleCreate = async (e) => {
     e.preventDefault();
     setCreating(true);
     setError(null);
     try {
+      // client-side validation for file size
+      if (gambarFile && gambarFile.size > 2 * 1024 * 1024) {
+        setError('Ukuran gambar maksimal 2MB');
+        setCreating(false);
+        return;
+      }
+
       const form = new FormData();
       form.append('kode_barang', kode);
       form.append('nama_barang', nama);
@@ -104,7 +127,25 @@ const Barang = () => {
         <div className="col-md-7">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">Daftar Barang</h5>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="card-title mb-0">Daftar Barang</h5>
+                <div className="d-flex gap-2">
+                  <input placeholder="Cari nama atau kode" className="form-control form-control-sm" style={{ width: 220 }} value={searchTerm} onChange={e => { setSearchTerm(e.target.value); setPage(1); }} />
+                  <select className="form-select form-select-sm" style={{ width: 140 }} value={filterKategori} onChange={e => { setFilterKategori(e.target.value); setPage(1); }}>
+                    <option value="">Semua Kategori</option>
+                    <option value="Umum">Umum</option>
+                    <option value="Elektronik">Elektronik</option>
+                    <option value="Kantor">Kantor</option>
+                  </select>
+                  <select className="form-select form-select-sm" style={{ width: 80 }} value={limit} onChange={e => { setLimit(Number(e.target.value)); setPage(1); }}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                  </select>
+                </div>
+              </div>
+
               {loading ? <p>Memuat...</p> : (
                 <ul className="list-group">
                   {barangList.map(b => (
@@ -133,6 +174,16 @@ const Barang = () => {
                   ))}
                 </ul>
               )}
+
+              <div className="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                  <small className="text-muted">Halaman {page} dari {totalPages}</small>
+                </div>
+                <div>
+                  <button className="btn btn-sm btn-outline-secondary me-2" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Sebelumnya</button>
+                  <button className="btn btn-sm btn-outline-primary" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Selanjutnya</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
