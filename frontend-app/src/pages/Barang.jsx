@@ -109,9 +109,21 @@ const Barang = () => {
                 <ul className="list-group">
                   {barangList.map(b => (
                     <li key={b._id} className="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <div className="fw-bold">{b.nama_barang}</div>
-                        <small className="text-muted">{b.kode_barang} • {b.kategori}</small>
+                      <div className="d-flex align-items-center">
+                        <div className="me-3" style={{ width: 60, height: 60 }}>
+                          {b.gambar ? (
+                            // backend serves files under /public
+                            <img src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${b.gambar}`} alt={b.nama_barang} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: 8 }} />
+                          ) : (
+                            <div className="bg-light d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px', borderRadius: 8 }}>
+                              <small className="text-muted">No Img</small>
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="fw-bold">{b.nama_barang}</div>
+                          <small className="text-muted">{b.kode_barang} • {b.kategori}</small>
+                        </div>
                       </div>
                       <div className="text-end">
                         <div>Stok: <span className="fw-bold">{b.stok}</span></div>
