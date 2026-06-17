@@ -2,12 +2,13 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const authRoutes = require("./routes/authRoutes");
-const testRoutes = require("./routes/testRoutes");
-const barangRoutes = require("./routes/barangRoutes");
-const barangMasukRoutes = require("./routes/barangMasukRoutes");
-const barangKeluarRoutes = require("./routes/barangKeluarRoutes");
-const dashboardRoutes = require("./routes/dashboardRoutes");
+const authRoutes = require("./backend/routes/authRoutes");
+const testRoutes = require("./backend/routes/testRoutes");
+const barangRoutes = require("./backend/routes/barangRoutes");
+const barangMasukRoutes = require("./backend/routes/barangMasukRoutes");
+const barangKeluarRoutes = require("./backend/routes/barangKeluarRoutes");
+const dashboardRoutes = require("./backend/routes/dashboardRoutes");
+const permintaanRoutes = require("./backend/routes/permintaanRoutes");
 
 const connectDB = require("./config/db");
 
@@ -23,6 +24,7 @@ app.use("/api/barang", barangRoutes);
 app.use("/api/barang-masuk",barangMasukRoutes);
 app.use("/api/barang-keluar", barangKeluarRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/permintaan", permintaanRoutes);
 
 app.get("/", (req, res) => {
   res.send("API Inventaris Berjalan");

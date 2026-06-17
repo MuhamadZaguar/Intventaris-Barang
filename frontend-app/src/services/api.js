@@ -90,3 +90,12 @@ export const barangKeluarService = {
     return await api.post('/barang-keluar', payload);
   }
 };
+
+export const permintaanService = {
+  getAllMy: async () => {
+    return await api.get('/permintaan/my');
+  },
+  create: async (payload) => {
+    return await api.post('/permintaan', payload);
+  }
+};
