@@ -75,8 +75,12 @@ const Navbar = ({ onToggleSidebar }) => {
           <div className="vr me-3 d-none d-sm-block"></div>
 
           <div className="d-flex align-items-center me-3 d-none d-sm-block text-end">
-            <p className="small fw-bold mb-0 text-dark">{user?.nama || 'Admin'}</p>
-            <p className="small text-muted mb-0" style={{ fontSize: '0.7rem' }}>{user?.email || 'admin@stockify.com'}</p>
+            <p className="small fw-bold mb-0 text-dark">{user?.nama || 'Pengguna'}</p>
+            <p className="small text-primary fw-bold mb-0 text-uppercase" style={{ fontSize: '0.6rem', letterSpacing: '0.5px' }}>
+              {user?.role === 'staff' || user?.role === 'admin' ? 'Staff Gudang' : 
+               user?.role === 'manager' ? 'Manajer' : 
+               user?.role || 'Guest'}
+            </p>
           </div>
 
           <button className="btn btn-outline-danger btn-sm px-3 rounded-pill" onClick={handleLogout}>

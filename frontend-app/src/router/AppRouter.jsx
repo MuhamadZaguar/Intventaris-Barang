@@ -27,14 +27,22 @@ const AppRouter = () => {
   <Route path="/" element={<RequireAuth><DashboardLayout /></RequireAuth>}>
           {/* Jika akses ke "/", otomatis diarahkan ke /dashboard */}
           <Route index element={<Navigate to="/dashboard" replace />} /> {/* Redirect root to /dashboard */}
-          <Route path="dashboard" element={<Dashboard />} /> {/* Use the main Dashboard component */}
+          <Route path="dashboard" element={
+            <RequireAuth allowedRoles={['admin', 'staff', 'manager']}>
+              <Dashboard />
+            </RequireAuth>
+          } />
           <Route path="dashboard/transactions" element={<DashboardTransactions />} />
           <Route path="dashboard/stock" element={<DashboardStock />} />
           
           {/* Halaman Data Barang */}
-          <Route path="barang" element={<Barang />} />
-          <Route path="barang-masuk" element={<BarangMasuk />} />
-          <Route path="barang-keluar" element={<BarangKeluar />} />
+          <Route path="barang" element={
+            <RequireAuth allowedRoles={['admin', 'staff']}>
+              <Barang />
+            </RequireAuth>
+          } />
+          <Route path="barang-masuk" element={<RequireAuth allowedRoles={['admin', 'staff']}><BarangMasuk /></RequireAuth>} />
+          <Route path="barang-keluar" element={<RequireAuth allowedRoles={['admin', 'staff']}><BarangKeluar /></RequireAuth>} />
         </Route>
       </Routes>
     </BrowserRouter>

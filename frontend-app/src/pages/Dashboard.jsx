@@ -1,7 +1,8 @@
 // src/pages/Dashboard.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Package, ArrowDownRight, ArrowUpRight, AlertTriangle, Clock } from 'lucide-react';
+import { AuthContext } from '../context/AuthContext';
 import { dashboardService } from '../services/api';
 import DashboardCharts from '../components/DashboardCharts';
 
@@ -64,6 +65,7 @@ const TransactionItem = ({ trx }) => {
 
 // --- Komponen Utama: Dashboard ---
 const Dashboard = () => {
+  const { user } = useContext(AuthContext);
   const [stats, setStats] = useState([]);
   const [recentTransactions, setRecentTransactions] = useState([]);
   const [pieChartData, setPieChartData] = useState(null);
@@ -136,7 +138,13 @@ const Dashboard = () => {
       {/* Header Halaman */}
       <div className="col-12">
         <h2 className="fw-bold text-dark h4 mb-1">Ringkasan Inventori</h2>
-        <p className="text-muted small">Selamat datang kembali! Berikut ikhtisar data hari ini.</p>
+        <p className="text-muted small">
+          Selamat datang kembali, <strong>{user?.nama || 'User'}</strong>! 
+          Anda masuk sebagai <span className="badge bg-primary-subtle text-primary border border-primary-subtle">
+            {user?.role === 'staff' || user?.role === 'admin' ? 'Staff Gudang' : 
+             user?.role === 'manager' ? 'Manajer' : user?.role || 'Guest'}
+          </span>.
+        </p>
       </div>
 
       {/* Statistik Utama - Grid Kartu */}

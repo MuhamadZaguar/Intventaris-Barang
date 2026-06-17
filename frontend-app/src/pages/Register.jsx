@@ -8,6 +8,7 @@ export default function Register() {
 	const [nama, setNama] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [role, setRole] = useState('staff')
 	const [error, setError] = useState('')
 	const [loading, setLoading] = useState(false)
 	const navigate = useNavigate()
@@ -28,7 +29,7 @@ export default function Register() {
 
 		setLoading(true)
 		try {
-			const res = await authService.register({ nama, email, password })
+			const res = await authService.register({ nama, email, password, role })
 			console.info('register success', res.data)
 			navigate('/login')
 		} catch (err) {
@@ -82,6 +83,15 @@ export default function Register() {
 									<Form.Label>Password</Form.Label>
 									<Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 									<Form.Text className="text-muted">Minimal 6 karakter</Form.Text>
+								</Form.Group>
+
+								<Form.Group className="mb-3" controlId="role">
+									<Form.Label>Role</Form.Label>
+									<Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
+										<option value="staff">Staff</option>
+										<option value="manager">Manager</option>
+										<option value="admin">Admin</option>
+									</Form.Select>
 								</Form.Group>
 
 								<div className="d-grid">

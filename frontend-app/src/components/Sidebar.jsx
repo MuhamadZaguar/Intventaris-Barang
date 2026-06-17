@@ -1,21 +1,27 @@
+import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+import { AuthContext } from '../context/AuthContext';
 
 const Sidebar = ({ onItemClick }) => {
+  const { user } = useContext(AuthContext);
   const location = useLocation();
 
   const menuItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: LayoutGrid },
-    { path: '/barang', label: 'Data Barang', icon: Package },
-    { path: '/barang-masuk', label: 'Barang Masuk', icon: ArrowDownLeft },
-    { path: '/barang-keluar', label: 'Barang Keluar', icon: ArrowUpRight },
+    { path: '/dashboard', label: 'Dashboard', icon: LayoutGrid, roles: ['admin', 'staff', 'manager'] },
+    { path: '/barang', label: 'Data Barang', icon: Package, roles: ['admin', 'staff'] },
+    { path: '/barang-masuk', label: 'Barang Masuk', icon: ArrowDownLeft, roles: ['admin', 'staff'] },
+    { path: '/barang-keluar', label: 'Barang Keluar', icon: ArrowUpRight, roles: ['admin', 'staff'] },
   ];
+
+  // Filter menu berdasarkan role user
+  const filteredMenu = menuItems.filter(item => item.roles.includes(user?.role || 'staff'));
 
   return (
     <div className="d-flex flex-column h-100 p-2 py-3">
       <p className="text-muted small fw-bold px-3 text-uppercase mb-2">Menu Utama</p>
       <nav className="nav nav-pills flex-column mb-auto">
-        {menuItems.map((item) => {
+        {filteredMenu.map((item) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
           return (
