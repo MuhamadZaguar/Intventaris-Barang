@@ -6,7 +6,7 @@ import { PackageSearch } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useContext(AuthContext);
+  const { isAuthenticated, login, user } = useContext(AuthContext);
   const location = useLocation();
 
   // Tentukan tujuan redirect. 
@@ -38,9 +38,16 @@ const Login = () => {
 
     try {
       // Gunakan AuthContext untuk login (saat ini authService mock di src/services/api.js)
-      const success = await login(formData.email, formData.password);
-      if (success) {
-        navigate(from, { replace: true });
+      const result = await login(formData.email, formData.password);
+      if (result) {
+        // Ambil role dari hasil login atau context untuk menentukan arah redirect
+        const role = result.role || result.user?.role;
+        
+        if (role === 'manager' || role === 'karyawan') {
+          navigate('/dashboard', { replace: true });
+        } else {
+          navigate(from, { replace: true });
+        }
       } else {
         setError('Login gagal, coba lagi.');
       }
@@ -53,8 +60,15 @@ const Login = () => {
 
   // Jika sudah terautentikasi, langsung arahkan ke dashboard
   useEffect(() => {
-    if (isAuthenticated) navigate(from, { replace: true });
-  }, [isAuthenticated]);
+    if (isAuthenticated && user) {
+      // Pastikan Manager dan Karyawan selalu ke Dashboard utama
+      if (user.role === 'manager' || user.role === 'karyawan') {
+        navigate('/dashboard', { replace: true });
+      } else {
+        navigate(from, { replace: true });
+      }
+    }
+  }, [isAuthenticated, user, navigate, from]);
 
   return (
     <div>
