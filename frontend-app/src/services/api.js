@@ -24,6 +24,9 @@ export const authService = {
   },
   register: async (payload) => {
     return await api.post('/auth/register', payload);
+  },
+  resetPassword: async (payload) => {
+    return await api.post('/auth/reset-password', payload);
   }
 };
 

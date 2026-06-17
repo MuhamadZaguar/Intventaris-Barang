@@ -6,6 +6,7 @@ import DashboardTransactions from '../pages/DashboardTransactions';
 import DashboardStock from '../pages/DashboardStock';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import ForgotPassword from '../pages/ForgotPassword';
 import RequireAuth from '../components/RequireAuth';
 import Barang from '../pages/Barang';
 import BarangMasuk from '../pages/BarangMasuk';
@@ -20,6 +21,7 @@ const AppRouter = () => {
       <Routes>
   {/* Rute Halaman Login */}
   <Route path="/login" element={<Login />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
   {/* Rute Halaman Register (case-sensitive) */}
   <Route path="/register" element={<Register />} />
   {/* Toleransi untuk kapitalisasi yang tidak konsisten */}

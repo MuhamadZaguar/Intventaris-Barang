@@ -100,7 +100,7 @@ const Login = () => {
               <Form.Group className="mb-3" controlId="password">
                 <div className="d-flex justify-content-between">
                   <Form.Label>Password</Form.Label>
-                  <a href="#" className="small">Lupa password?</a>
+                  <Link to="/forgot-password" size="sm" className="small">Lupa password?</Link>
                 </div>
                 <Form.Control type="password" name="password" placeholder="••••••••" value={formData.password} onChange={handleChange} required />
               </Form.Group>
