@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { register } from '../services/api'
+import { authService } from '../services/api'
 
 export default function Register() {
 	const [nama, setNama] = useState('')
@@ -15,9 +15,9 @@ export default function Register() {
 		setError('')
 		setLoading(true)
 		try {
-			const res = await register({ nama, email, password })
+			const res = await authService.register({ nama, email, password })
 			// backend returns message on success
-			console.info('register success', res)
+			console.info('register success', res.data)
 			navigate('/login')
 		} catch (err) {
 			console.error('register error', err)

@@ -79,7 +79,7 @@ const Login = () => {
           </Form>
 
           <div className="text-center mt-3 small text-muted">
-            Belum punya akun? <Link to="/register">Daftar sekarang</Link>
+            Belum punya akun? <Link to="/Register">Daftar sekarang</Link>
           </div>
         </Card.Body>
       </Card>

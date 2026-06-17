@@ -1,6 +1,17 @@
 import { Bell } from 'lucide-react';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar navbar-light bg-white border-bottom">
       <div className="container-fluid">
@@ -16,10 +27,11 @@ const Navbar = () => {
 
           <div className="d-flex align-items-center">
             <div className="rounded-circle bg-secondary" style={{ width: 40, height: 40 }} />
-            <div className="ms-2">
-              <div className="fw-semibold">Administrator</div>
-              <div className="small text-muted">admin@stockify.com</div>
+            <div className="ms-2 me-3">
+              <div className="fw-semibold">{user?.nama || user?.name || 'Pengguna'}</div>
+              <div className="small text-muted">{user?.email || '—'}</div>
             </div>
+            <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>Logout</button>
           </div>
         </div>
       </div>
