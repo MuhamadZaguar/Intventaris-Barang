@@ -114,9 +114,24 @@ const BarangKeluar = () => {
         <ul className="list-group">
           {transaksiList.map((t) => (
             <li key={t._id} className="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <div className="fw-bold">{t.barang_id?.nama || '—'}</div>
-                <small className="text-muted">Jumlah: {t.jumlah}</small>
+              <div className="d-flex align-items-center">
+                <div className="me-3" style={{ width: 40, height: 40 }}>
+                  {t.barang_id?.gambar ? (
+                    <img 
+                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${t.barang_id.gambar}`} 
+                      alt="" 
+                      style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: 4 }} 
+                    />
+                  ) : (
+                    <div className="bg-light d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', borderRadius: 4 }}>
+                      <small className="text-muted" style={{ fontSize: '10px' }}>No Img</small>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <div className="fw-bold">{t.barang_id?.nama_barang || t.barang_id?.nama || '—'}</div>
+                  <small className="text-muted">{(t.barang_id?.kode_barang || t.barang_id?.kode || '—')} • Jumlah: {t.jumlah}</small>
+                </div>
               </div>
               <small className="text-muted">{new Date(t.createdAt).toLocaleString()}</small>
             </li>
