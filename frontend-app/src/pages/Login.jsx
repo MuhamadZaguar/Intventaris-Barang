@@ -43,7 +43,7 @@ const Login = () => {
         // Ambil role dari hasil login atau context untuk menentukan arah redirect
         const role = result.role || result.user?.role;
         
-        if (role === 'manager' || role === 'karyawan') {
+        if (role === 'manager' || role === 'karyawan' || role === 'staff') {
           navigate('/dashboard', { replace: true });
         } else {
           navigate(from, { replace: true });
@@ -62,7 +62,7 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated && user) {
       // Pastikan Manager dan Karyawan selalu ke Dashboard utama
-      if (user.role === 'manager' || user.role === 'karyawan') {
+      if (user.role === 'manager' || user.role === 'karyawan' || user.role === 'staff') {
         navigate('/dashboard', { replace: true });
       } else {
         navigate(from, { replace: true });
