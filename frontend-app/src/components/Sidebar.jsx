@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight, Users } from 'lucide-react';
+import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight, Users, ClipboardCheck } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const Sidebar = ({ onItemClick }) => {
@@ -12,6 +12,7 @@ const Sidebar = ({ onItemClick }) => {
     { path: '/barang', label: 'Data Barang', icon: Package, roles: ['staff'] },
     { path: '/barang-masuk', label: 'Barang Masuk', icon: ArrowDownLeft, roles: ['staff'] },
     { path: '/barang-keluar', label: 'Barang Keluar', icon: ArrowUpRight, roles: ['staff'] },
+    { path: '/kelola-permintaan', label: 'Kelola Permintaan', icon: ClipboardCheck, roles: ['staff'] },
     { path: '/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },
     { path: '/permintaan', label: 'Permintaan Barang', icon: Package, roles: ['karyawan'] },
   ];

@@ -12,6 +12,7 @@ import BarangMasuk from '../pages/BarangMasuk';
 import BarangKeluar from '../pages/BarangKeluar';
 import UsersPage from '../pages/Users';
 import PermintaanBarang from '../pages/PermintaanBarang';
+import KelolaPermintaan from '../pages/KelolaPermintaan';
 
 const AppRouter = () => {
   return (
@@ -46,6 +47,7 @@ const AppRouter = () => {
           <Route path="barang-masuk" element={<RequireAuth allowedRoles={['admin', 'staff']}><BarangMasuk /></RequireAuth>} />
           <Route path="barang-keluar" element={<RequireAuth allowedRoles={['admin', 'staff']}><BarangKeluar /></RequireAuth>} />
           <Route path="users" element={<RequireAuth allowedRoles={['admin']}><UsersPage /></RequireAuth>} />
+          <Route path="kelola-permintaan" element={<RequireAuth allowedRoles={['staff']}><KelolaPermintaan /></RequireAuth>} />
           <Route path="permintaan" element={<RequireAuth allowedRoles={['karyawan']}><PermintaanBarang /></RequireAuth>} />
         </Route>
       </Routes>

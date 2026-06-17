@@ -95,7 +95,13 @@ export const permintaanService = {
   getAllMy: async () => {
     return await api.get('/permintaan/my');
   },
+  getAll: async () => {
+    return await api.get('/permintaan');
+  },
   create: async (payload) => {
     return await api.post('/permintaan', payload);
+  },
+  updateStatus: async (id, status) => {
+    return await api.patch(`/permintaan/${id}/status`, { status });
   }
 };
