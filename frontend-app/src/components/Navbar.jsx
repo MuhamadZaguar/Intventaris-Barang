@@ -1,4 +1,4 @@
-import { Bell } from 'lucide-react';
+import { Bell, Sun, Moon } from 'lucide-react';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +22,10 @@ const Navbar = () => {
         </form>
 
         <div className="d-flex align-items-center ms-auto">
+          <button className="btn btn-link text-secondary me-2" onClick={toggleTheme} title="Ganti Tema">
+            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+          </button>
+
           <button className="btn btn-link text-secondary position-relative me-3">
             <Bell size={20} />
             <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>

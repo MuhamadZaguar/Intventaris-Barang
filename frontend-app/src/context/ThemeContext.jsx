@@ -16,6 +16,7 @@ export const ThemeProvider = ({ children }) => {
     // apply data-theme attribute to root for CSS selectors
     try {
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute('data-bs-theme', theme);
       localStorage.setItem('app-theme', theme);
     } catch (e) {
       // ignore
