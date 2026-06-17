@@ -12,6 +12,7 @@ const Barang = () => {
   const [kategori, setKategori] = useState('Umum');
   const [stok, setStok] = useState(0);
   const [harga, setHarga] = useState(0);
+  const [gambarFile, setGambarFile] = useState(null);
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState(null);
 
@@ -35,18 +36,18 @@ const Barang = () => {
     setCreating(true);
     setError(null);
     try {
-      const payload = {
-        kode_barang: kode,
-        nama_barang: nama,
-        kategori,
-        stok: Number(stok),
-        harga: Number(harga),
-      };
-      const res = await barangAdminService.create(payload);
+      const form = new FormData();
+      form.append('kode_barang', kode);
+      form.append('nama_barang', nama);
+      form.append('kategori', kategori);
+      form.append('stok', Number(stok));
+      form.append('harga', Number(harga));
+      if (gambarFile) form.append('gambar', gambarFile);
+      const res = await barangAdminService.create(form);
       // refresh list
       await fetchList();
       // reset form
-      setKode(''); setNama(''); setKategori('Umum'); setStok(0); setHarga(0);
+  setKode(''); setNama(''); setKategori('Umum'); setStok(0); setHarga(0); setGambarFile(null);
     } catch (err) {
       console.error(err);
       setError(err?.response?.data?.message || 'Gagal membuat barang');
@@ -86,6 +87,10 @@ const Barang = () => {
                 <div className="mb-3">
                   <label className="form-label">Harga</label>
                   <input type="number" className="form-control" value={harga} onChange={e => setHarga(e.target.value)} min={0} />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Gambar (opsional)</label>
+                  <input type="file" accept="image/*" className="form-control" onChange={e => setGambarFile(e.target.files[0])} />
                 </div>
 
                 {error && <div className="alert alert-danger">{error}</div>}

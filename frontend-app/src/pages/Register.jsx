@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { authService } from '../services/api'
-import { Form, Button, Card, Alert } from 'react-bootstrap'
+import { Form, Button, Card, Alert, Navbar, Container } from 'react-bootstrap'
+import { PackageSearch } from 'lucide-react'
 
 export default function Register() {
 	const [nama, setNama] = useState('')
@@ -46,43 +47,56 @@ export default function Register() {
 	}
 
 	return (
-		<div className="d-flex align-items-center justify-content-center vh-100">
-			<Card className="shadow" style={{ width: '28rem' }}>
-				<Card.Body>
-					<Card.Title className="text-center mb-3">Daftar</Card.Title>
-					<Card.Subtitle className="mb-3 text-muted text-center">Buat akun untuk mulai menggunakan Sistem Inventaris</Card.Subtitle>
+			<div>
+				<Navbar bg="light" className="shadow-sm">
+					<Container>
+						<Navbar.Brand as={Link} to="/" className="d-flex align-items-center text-dark">
+							<div className="bg-primary text-white p-2 rounded me-2 d-flex align-items-center justify-content-center">
+								<PackageSearch size={18} />
+							</div>
+							<span className="fw-bold">Stock<span className="text-primary">ify</span></span>
+						</Navbar.Brand>
+					</Container>
+				</Navbar>
 
-					{error && <Alert variant="danger">{error}</Alert>}
+				<div className="d-flex align-items-center justify-content-center" style={{ height: 'calc(100vh - 56px)' }}>
+					<Card className="shadow" style={{ width: '28rem' }}>
+						<Card.Body>
+							<Card.Title className="text-center mb-3">Daftar</Card.Title>
+							<Card.Subtitle className="mb-3 text-muted text-center">Buat akun untuk mulai menggunakan Sistem Inventaris</Card.Subtitle>
 
-					<Form onSubmit={handleSubmit}>
-						<Form.Group className="mb-3" controlId="nama">
-							<Form.Label>Nama</Form.Label>
-							<Form.Control value={nama} onChange={(e) => setNama(e.target.value)} required />
-						</Form.Group>
+							{error && <Alert variant="danger">{error}</Alert>}
 
-						<Form.Group className="mb-3" controlId="email">
-							<Form.Label>Email</Form.Label>
-							<Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-						</Form.Group>
+							<Form onSubmit={handleSubmit}>
+								<Form.Group className="mb-3" controlId="nama">
+									<Form.Label>Nama</Form.Label>
+									<Form.Control value={nama} onChange={(e) => setNama(e.target.value)} required />
+								</Form.Group>
 
-						<Form.Group className="mb-3" controlId="password">
-							<Form.Label>Password</Form.Label>
-							<Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-							<Form.Text className="text-muted">Minimal 6 karakter</Form.Text>
-						</Form.Group>
+								<Form.Group className="mb-3" controlId="email">
+									<Form.Label>Email</Form.Label>
+									<Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+								</Form.Group>
 
-						<div className="d-grid">
-							<Button variant="primary" type="submit" disabled={loading}>
-								{loading ? 'Mendaftarkan...' : 'Daftar'}
-							</Button>
-						</div>
-					</Form>
+								<Form.Group className="mb-3" controlId="password">
+									<Form.Label>Password</Form.Label>
+									<Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+									<Form.Text className="text-muted">Minimal 6 karakter</Form.Text>
+								</Form.Group>
 
-					<div className="text-center mt-3 small text-muted">
-						Sudah punya akun? <Link to="/login">Login</Link>
-					</div>
-				</Card.Body>
-			</Card>
-		</div>
+								<div className="d-grid">
+									<Button variant="primary" type="submit" disabled={loading}>
+										{loading ? 'Mendaftarkan...' : 'Daftar'}
+									</Button>
+								</div>
+							</Form>
+
+							<div className="text-center mt-3 small text-muted">
+								Sudah punya akun? <Link to="/login">Login</Link>
+							</div>
+						</Card.Body>
+					</Card>
+				</div>
+			</div>
 	)
 }

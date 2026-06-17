@@ -31,6 +31,12 @@ export const barangService = {
 
 export const barangAdminService = {
   create: async (payload) => {
+    // if payload is FormData (has append), send as multipart/form-data
+    if (payload && typeof payload.append === 'function') {
+      return await api.post('/barang', payload, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+    }
     return await api.post('/barang', payload);
   },
   update: async (id, payload) => {
