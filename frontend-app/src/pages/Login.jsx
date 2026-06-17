@@ -1,11 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 
 const Login = () => {
   const navigate = useNavigate();
   const { isAuthenticated, login } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/dashboard';
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -30,7 +32,7 @@ const Login = () => {
       // Gunakan AuthContext untuk login (saat ini authService mock di src/services/api.js)
       const success = await login(formData.email, formData.password);
       if (success) {
-        navigate('/dashboard');
+        navigate(from, { replace: true });
       } else {
         setError('Login gagal, coba lagi.');
       }
@@ -43,7 +45,7 @@ const Login = () => {
 
   // Jika sudah terautentikasi, langsung arahkan ke dashboard
   useEffect(() => {
-    if (isAuthenticated) navigate('/dashboard');
+    if (isAuthenticated) navigate(from, { replace: true });
   }, [isAuthenticated]);
 
   return (
