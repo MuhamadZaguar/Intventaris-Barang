@@ -143,6 +143,22 @@ const Barang = () => {
                     <option value={20}>20</option>
                     <option value={50}>50</option>
                   </select>
+                  <button className="btn btn-sm btn-outline-secondary" onClick={async () => {
+                    try {
+                      const res = await barangService.exportPdf({ search: searchTerm, kategori: filterKategori });
+                      const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'barang-list.pdf';
+                      document.body.appendChild(a);
+                      a.click();
+                      a.remove();
+                      window.URL.revokeObjectURL(url);
+                    } catch (err) {
+                      console.error('Export PDF gagal', err);
+                      alert('Gagal mengekspor PDF');
+                    }
+                  }}>Export PDF</button>
                 </div>
               </div>
 

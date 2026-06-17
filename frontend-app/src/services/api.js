@@ -28,6 +28,11 @@ export const barangService = {
     // params: { page, limit, search, kategori }
     return await api.get('/barang', { params });
   }
+  ,
+  exportPdf: async (params = {}) => {
+    // return blob response
+    return await api.get('/barang/export/pdf', { params, responseType: 'blob' });
+  }
 };
 
 export const barangAdminService = {
