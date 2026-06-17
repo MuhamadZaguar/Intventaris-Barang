@@ -29,6 +29,18 @@ export const barangService = {
   }
 };
 
+export const barangAdminService = {
+  create: async (payload) => {
+    return await api.post('/barang', payload);
+  },
+  update: async (id, payload) => {
+    return await api.put(`/barang/${id}`, payload);
+  },
+  delete: async (id) => {
+    return await api.delete(`/barang/${id}`);
+  }
+};
+
 export const barangMasukService = {
   getAll: async () => {
     return await api.get('/barang-masuk');
