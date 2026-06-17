@@ -15,7 +15,6 @@ const Barang = () => {
   const [kode, setKode] = useState('');
   const [nama, setNama] = useState('');
   const [kategori, setKategori] = useState('Umum');
-  const [stok, setStok] = useState(0);
   const [harga, setHarga] = useState(0);
   const [gambarFile, setGambarFile] = useState(null);
   const [creating, setCreating] = useState(false);
@@ -63,14 +62,13 @@ const Barang = () => {
       form.append('kode_barang', kode);
       form.append('nama_barang', nama);
       form.append('kategori', kategori);
-      form.append('stok', Number(stok));
       form.append('harga', Number(harga));
       if (gambarFile) form.append('gambar', gambarFile);
       const res = await barangAdminService.create(form);
       // refresh list
       await fetchList();
       // reset form
-  setKode(''); setNama(''); setKategori('Umum'); setStok(0); setHarga(0); setGambarFile(null);
+  setKode(''); setNama(''); setKategori('Umum'); setHarga(0); setGambarFile(null);
     } catch (err) {
       console.error(err);
       setError(err?.response?.data?.message || 'Gagal membuat barang');
@@ -103,10 +101,6 @@ const Barang = () => {
                   <label className="form-label">Kategori</label>
                   <input className="form-control" value={kategori} onChange={e => setKategori(e.target.value)} />
                 </div>
-                <div className="mb-2">
-                  <label className="form-label">Stok</label>
-                  <input type="number" className="form-control" value={stok} onChange={e => setStok(e.target.value)} min={0} />
-                </div>
                 <div className="mb-3">
                   <label className="form-label">Harga</label>
                   <input type="number" className="form-control" value={harga} onChange={e => setHarga(e.target.value)} min={0} />
@@ -136,12 +130,6 @@ const Barang = () => {
                     <option value="Umum">Umum</option>
                     <option value="Elektronik">Elektronik</option>
                     <option value="Kantor">Kantor</option>
-                  </select>
-                  <select className="form-select form-select-sm" style={{ width: 80 }} value={limit} onChange={e => { setLimit(Number(e.target.value)); setPage(1); }}>
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
                   </select>
                   <button className="btn btn-sm btn-outline-secondary" onClick={async () => {
                     try {
