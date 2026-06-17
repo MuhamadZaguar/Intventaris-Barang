@@ -137,11 +137,12 @@ const Dashboard = () => {
     <div className="row g-4">
       {/* Header Halaman */}
       <div className="col-12">
-        <h2 className="fw-bold text-dark h4 mb-1">Ringkasan Inventori</h2>
+        <h2 className="fw-bold text-dark h4 mb-1">{user?.role === 'admin' ? 'Panel Kontrol Admin' : 'Ringkasan Inventori'}</h2>
         <p className="text-muted small">
           Selamat datang kembali, <strong>{user?.nama || 'User'}</strong>! 
           Anda masuk sebagai <span className="badge bg-primary-subtle text-primary border border-primary-subtle">
-            {user?.role === 'staff' || user?.role === 'admin' ? 'Staff Gudang' : 
+            {user?.role === 'admin' ? 'Administrator' : 
+             user?.role === 'staff' ? 'Staff Gudang' : 
              user?.role === 'manager' ? 'Manajer' : user?.role || 'Guest'}
           </span>.
         </p>

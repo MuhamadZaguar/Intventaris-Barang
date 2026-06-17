@@ -10,6 +10,7 @@ import RequireAuth from '../components/RequireAuth';
 import Barang from '../pages/Barang';
 import BarangMasuk from '../pages/BarangMasuk';
 import BarangKeluar from '../pages/BarangKeluar';
+import UsersPage from '../pages/Users';
 
 const AppRouter = () => {
   return (
@@ -43,6 +44,7 @@ const AppRouter = () => {
           } />
           <Route path="barang-masuk" element={<RequireAuth allowedRoles={['admin', 'staff']}><BarangMasuk /></RequireAuth>} />
           <Route path="barang-keluar" element={<RequireAuth allowedRoles={['admin', 'staff']}><BarangKeluar /></RequireAuth>} />
+          <Route path="users" element={<RequireAuth allowedRoles={['admin']}><UsersPage /></RequireAuth>} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight, Users } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const Sidebar = ({ onItemClick }) => {
@@ -9,9 +9,10 @@ const Sidebar = ({ onItemClick }) => {
 
   const menuItems = [
     { path: '/dashboard', label: 'Dashboard', icon: LayoutGrid, roles: ['admin', 'staff', 'manager'] },
-    { path: '/barang', label: 'Data Barang', icon: Package, roles: ['admin', 'staff'] },
-    { path: '/barang-masuk', label: 'Barang Masuk', icon: ArrowDownLeft, roles: ['admin', 'staff'] },
-    { path: '/barang-keluar', label: 'Barang Keluar', icon: ArrowUpRight, roles: ['admin', 'staff'] },
+    { path: '/barang', label: 'Data Barang', icon: Package, roles: ['staff'] },
+    { path: '/barang-masuk', label: 'Barang Masuk', icon: ArrowDownLeft, roles: ['staff'] },
+    { path: '/barang-keluar', label: 'Barang Keluar', icon: ArrowUpRight, roles: ['staff'] },
+    { path: '/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },
   ];
 
   // Filter menu berdasarkan role user

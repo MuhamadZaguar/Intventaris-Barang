@@ -77,7 +77,8 @@ const Navbar = ({ onToggleSidebar }) => {
           <div className="d-flex align-items-center me-3 d-none d-sm-block text-end">
             <p className="small fw-bold mb-0 text-dark">{user?.nama || 'Pengguna'}</p>
             <p className="small text-primary fw-bold mb-0 text-uppercase" style={{ fontSize: '0.6rem', letterSpacing: '0.5px' }}>
-              {user?.role === 'staff' || user?.role === 'admin' ? 'Staff Gudang' : 
+              {user?.role === 'admin' ? 'Administrator' :
+               user?.role === 'staff' ? 'Staff Gudang' : 
                user?.role === 'manager' ? 'Manajer' : 
                user?.role || 'Guest'}
             </p>
