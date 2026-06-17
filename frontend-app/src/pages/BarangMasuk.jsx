@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { barangService, barangMasukService } from '../services/api';
 
 const BarangMasuk = () => {
-	const [barangList, setBarangList] = useState([]);
-	const [selectedBarang, setSelectedBarang] = useState('');
+		const [barangList, setBarangList] = useState([]);
+		const [selectedBarang, setSelectedBarang] = useState('');
+		const [kodeSearch, setKodeSearch] = useState('');
 	const [jumlah, setJumlah] = useState(1);
 	const [transaksiList, setTransaksiList] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -13,12 +14,23 @@ const BarangMasuk = () => {
 		try {
 			const res = await barangService.getAll();
 			setBarangList(res.data || []);
-			if ((res.data || []).length > 0) setSelectedBarang(res.data[0]._id);
+				if ((res.data || []).length > 0) setSelectedBarang(res.data[0]._id);
 		} catch (err) {
 			console.error(err);
 			setError('Gagal memuat daftar barang');
 		}
 	};
+
+		const handleCariKode = () => {
+			if (!kodeSearch) return setError('Masukkan kode barang untuk mencari');
+			const found = barangList.find((b) => (b.kode_barang || b.kode || '').toLowerCase() === kodeSearch.trim().toLowerCase());
+			if (found) {
+				setSelectedBarang(found._id);
+				setError(null);
+			} else {
+				setError('Barang dengan kode tersebut tidak ditemukan');
+			}
+		};
 
 	const loadTransaksi = async () => {
 		try {
@@ -61,14 +73,23 @@ const BarangMasuk = () => {
 			<div className="card mb-4">
 				<div className="card-body">
 					<form onSubmit={handleSubmit}>
-						<div className="mb-3">
-							<label className="form-label">Pilih Barang</label>
-							<select className="form-select" value={selectedBarang} onChange={(e) => setSelectedBarang(e.target.value)}>
-								{barangList.map((b) => (
-									<option key={b._id} value={b._id}>{b.nama} (stok: {b.stok})</option>
-								))}
-							</select>
-						</div>
+									<div className="mb-3">
+										<label className="form-label">Cari berdasarkan Kode Barang</label>
+										<div className="input-group">
+											<input className="form-control" placeholder="Masukkan kode barang (contoh: BRG001)" value={kodeSearch} onChange={(e) => setKodeSearch(e.target.value)} />
+											<button type="button" className="btn btn-outline-secondary" onClick={handleCariKode}>Cari</button>
+										</div>
+										<div className="form-text">Atau pilih dari daftar di bawah.</div>
+									</div>
+
+									<div className="mb-3">
+										<label className="form-label">Pilih Barang</label>
+										<select className="form-select" value={selectedBarang} onChange={(e) => setSelectedBarang(e.target.value)}>
+											{barangList.map((b) => (
+												<option key={b._id} value={b._id}>{(b.kode_barang || b.kode || '—')} — {(b.nama_barang || b.nama || '—')} (stok: {b.stok})</option>
+											))}
+										</select>
+									</div>
 
 						<div className="mb-3">
 							<label className="form-label">Jumlah</label>

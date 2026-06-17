@@ -4,6 +4,7 @@ import { barangService, barangKeluarService } from '../services/api';
 const BarangKeluar = () => {
   const [barangList, setBarangList] = useState([]);
   const [selectedBarang, setSelectedBarang] = useState('');
+  const [kodeSearch, setKodeSearch] = useState('');
   const [jumlah, setJumlah] = useState(1);
   const [transaksiList, setTransaksiList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,6 +18,17 @@ const BarangKeluar = () => {
     } catch (err) {
       console.error(err);
       setError('Gagal memuat daftar barang');
+    }
+  };
+
+  const handleCariKode = () => {
+    if (!kodeSearch) return setError('Masukkan kode barang untuk mencari');
+    const found = barangList.find((b) => (b.kode_barang || b.kode || '').toLowerCase() === kodeSearch.trim().toLowerCase());
+    if (found) {
+      setSelectedBarang(found._id);
+      setError(null);
+    } else {
+      setError('Barang dengan kode tersebut tidak ditemukan');
     }
   };
 
@@ -60,10 +72,19 @@ const BarangKeluar = () => {
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
+              <label className="form-label">Cari berdasarkan Kode Barang</label>
+              <div className="input-group">
+                <input className="form-control" placeholder="Masukkan kode barang" value={kodeSearch} onChange={(e) => setKodeSearch(e.target.value)} />
+                <button type="button" className="btn btn-outline-secondary" onClick={handleCariKode}>Cari</button>
+              </div>
+              <div className="form-text">Atau pilih dari daftar di bawah.</div>
+            </div>
+
+            <div className="mb-3">
               <label className="form-label">Pilih Barang</label>
               <select className="form-select" value={selectedBarang} onChange={(e) => setSelectedBarang(e.target.value)}>
                 {barangList.map((b) => (
-                  <option key={b._id} value={b._id}>{b.nama} (stok: {b.stok})</option>
+                  <option key={b._id} value={b._id}>{(b.kode_barang || b.kode || '—')} — {(b.nama_barang || b.nama || '—')} (stok: {b.stok})</option>
                 ))}
               </select>
             </div>
