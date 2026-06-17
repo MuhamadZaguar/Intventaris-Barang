@@ -1,7 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { Form, Button, Card, Alert } from 'react-bootstrap';
+import { Form, Button, Card, Alert, Navbar, Container } from 'react-bootstrap';
+import { PackageSearch } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,40 +50,53 @@ const Login = () => {
   }, [isAuthenticated]);
 
   return (
-    <div className="d-flex align-items-center justify-content-center vh-100">
-      <Card className="shadow card-rounded" style={{ width: '28rem' }}>
-        <Card.Body>
-          <Card.Title className="text-center mb-3">Selamat Datang</Card.Title>
-          <Card.Subtitle className="mb-3 text-muted text-center">Silakan masuk ke akun Sistem Inventori Anda</Card.Subtitle>
-
-          {error && <Alert variant="danger">{error}</Alert>}
-
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Alamat Email</Form.Label>
-              <Form.Control type="email" name="email" placeholder="nama@perusahaan.com" value={formData.email} onChange={handleChange} required />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="password">
-              <div className="d-flex justify-content-between">
-                <Form.Label>Password</Form.Label>
-                <a href="#" className="small">Lupa password?</a>
-              </div>
-              <Form.Control type="password" name="password" placeholder="••••••••" value={formData.password} onChange={handleChange} required />
-            </Form.Group>
-
-            <div className="d-grid">
-              <Button variant="primary" type="submit" disabled={isLoading}>
-                {isLoading ? 'Memproses...' : 'Masuk'}
-              </Button>
+    <div>
+      <Navbar bg="light" className="shadow-sm">
+        <Container>
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center text-dark">
+            <div className="bg-primary text-white p-2 rounded me-2 d-flex align-items-center justify-content-center">
+              <PackageSearch size={18} />
             </div>
-          </Form>
+            <span className="fw-bold">Stock<span className="text-primary">ify</span></span>
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
 
-          <div className="text-center mt-3 small text-muted">
-            Belum punya akun? <Link to="/Register">Daftar sekarang</Link>
-          </div>
-        </Card.Body>
-      </Card>
+      <div className="d-flex align-items-center justify-content-center" style={{ height: 'calc(100vh - 56px)' }}>
+        <Card className="shadow card-rounded" style={{ width: '28rem' }}>
+          <Card.Body>
+            <Card.Title className="text-center mb-3">Selamat Datang</Card.Title>
+            <Card.Subtitle className="mb-3 text-muted text-center">Silakan masuk ke akun Sistem Inventori Anda</Card.Subtitle>
+
+            {error && <Alert variant="danger">{error}</Alert>}
+
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Alamat Email</Form.Label>
+                <Form.Control type="email" name="email" placeholder="nama@perusahaan.com" value={formData.email} onChange={handleChange} required />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="password">
+                <div className="d-flex justify-content-between">
+                  <Form.Label>Password</Form.Label>
+                  <a href="#" className="small">Lupa password?</a>
+                </div>
+                <Form.Control type="password" name="password" placeholder="••••••••" value={formData.password} onChange={handleChange} required />
+              </Form.Group>
+
+              <div className="d-grid">
+                <Button variant="primary" type="submit" disabled={isLoading}>
+                  {isLoading ? 'Memproses...' : 'Masuk'}
+                </Button>
+              </div>
+            </Form>
+
+            <div className="text-center mt-3 small text-muted">
+              Belum punya akun? <Link to="/Register">Daftar sekarang</Link>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 };
