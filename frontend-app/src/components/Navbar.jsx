@@ -1,17 +1,33 @@
 import { Bell, Sun, Moon, PackageSearch } from 'lucide-react';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { theme, toggleTheme } = useTheme();
+  
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+
+  // Sinkronisasi input dengan URL jika berubah dari luar
+  useEffect(() => {
+    setSearchQuery(searchParams.get('search') || '');
+  }, [searchParams]);
+
+  const isDashboard = location.pathname === '/dashboard';
 
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard?search=${searchQuery}`);
   };
 
   return (
@@ -27,9 +43,19 @@ const Navbar = () => {
 
         <div className="vr d-none d-lg-block me-4" style={{ height: '30px' }}></div>
 
-        <form className="d-none d-md-flex flex-grow-1 max-w-sm me-auto">
-          <input className="form-control form-control-sm border-0 bg-light" type="search" placeholder="Cari data..." />
-        </form>
+        {isDashboard ? (
+          <form className="d-none d-md-flex flex-grow-1 max-w-sm me-auto" onSubmit={handleSearch}>
+            <input 
+              className="form-control form-control-sm border-0 bg-light" 
+              type="search" 
+              placeholder="Cari transaksi barang..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </form>
+        ) : (
+          <div className="me-auto"></div>
+        )}
 
         <div className="d-flex align-items-center ms-auto">
           <button className="btn btn-link text-secondary me-2" onClick={toggleTheme} title="Ganti Tema">

@@ -33,8 +33,8 @@ export const dashboardService = {
     return await api.get('/dashboard');
   },
   // detailed stats for charts
-  getStats: async () => {
-    return await api.get('/dashboard');
+  getStats: async (search = '') => {
+    return await api.get('/dashboard', { params: { search } });
   }
 };
 

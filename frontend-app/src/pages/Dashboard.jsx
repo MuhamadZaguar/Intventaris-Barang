@@ -1,5 +1,6 @@
 // src/pages/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Package, ArrowDownRight, ArrowUpRight, AlertTriangle, Clock } from 'lucide-react';
 import { dashboardService } from '../services/api';
 import DashboardCharts from '../components/DashboardCharts';
@@ -69,15 +70,16 @@ const Dashboard = () => {
   const [lineChartData, setLineChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
     const fetchDashboardData = async () => {
-      setLoading(true);
+      // Jangan set loading true sepenuhnya jika hanya pencarian agar UI tidak flicker berat
       setErrorMsg(null);
       try {
-        const res = await dashboardService.getStats(); // Assuming getStats() returns all data
+        const res = await dashboardService.getStats(searchQuery); 
         const d = res.data || {};
-        console.log('Dashboard data:', d); // Debugging: check what the backend returns
 
         // Set summary stats
         setStats([
@@ -115,7 +117,7 @@ const Dashboard = () => {
     };
 
     fetchDashboardData();
-  }, []);
+  }, [searchQuery]);
 
   if (loading) return (
     <div className="d-flex vh-100 align-items-center justify-content-center">
