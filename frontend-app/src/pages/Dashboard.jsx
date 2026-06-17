@@ -53,11 +53,12 @@ const Dashboard = () => {
   useEffect(() => {
     // Simulasi Fetch API
     dashboardService.getStats().then((res) => {
+      const d = res.data || {};
       setStats([
-        { id: 1, title: 'Total Jenis Barang', value: res.data.totalBarang.toLocaleString(), Icon: Package, color: 'text-blue-600', bg: 'bg-blue-50' },
-        { id: 2, title: 'Barang Masuk (Bulan Ini)', value: res.data.barangMasuk, Icon: ArrowDownRight, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-        { id: 3, title: 'Barang Keluar (Bulan Ini)', value: res.data.barangKeluar, Icon: ArrowUpRight, color: 'text-orange-600', bg: 'bg-orange-50' },
-        { id: 4, title: 'Stok Menipis (<5 Unit)', value: 18, Icon: AlertTriangle, color: 'text-rose-600', bg: 'bg-rose-50' },
+        { id: 1, title: 'Total Barang', value: (d.totalBarang || 0).toLocaleString(), Icon: Package, color: 'text-blue-600', bg: 'bg-blue-50' },
+        { id: 2, title: 'Total Pengguna', value: d.totalUser || 0, Icon: ArrowDownRight, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+        { id: 3, title: 'Barang Masuk', value: d.totalMasuk || 0, Icon: ArrowDownRight, color: 'text-orange-600', bg: 'bg-orange-50' },
+        { id: 4, title: 'Barang Keluar', value: d.totalKeluar || 0, Icon: ArrowUpRight, color: 'text-rose-600', bg: 'bg-rose-50' },
       ]);
       setLoading(false);
     });

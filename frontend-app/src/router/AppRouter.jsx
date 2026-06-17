@@ -4,6 +4,8 @@ import Dashboard from '../pages/Dashboard';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import RequireAuth from '../components/RequireAuth';
+import BarangMasuk from '../pages/BarangMasuk';
+import BarangKeluar from '../pages/BarangKeluar';
 
 const AppRouter = () => {
   return (
@@ -25,8 +27,8 @@ const AppRouter = () => {
           
           {/* Placeholder sementara untuk halaman lain agar tidak error saat diklik */}
           <Route path="barang" element={<div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h2 className="text-xl font-bold">Halaman Data Barang</h2><p className="text-gray-500 text-sm mt-1">Segera hadir.</p></div>} />
-          <Route path="barang-masuk" element={<div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h2 className="text-xl font-bold">Halaman Barang Masuk</h2><p className="text-gray-500 text-sm mt-1">Segera hadir.</p></div>} />
-          <Route path="barang-keluar" element={<div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h2 className="text-xl font-bold">Halaman Barang Keluar</h2><p className="text-gray-500 text-sm mt-1">Segera hadir.</p></div>} />
+          <Route path="barang-masuk" element={<BarangMasuk />} />
+          <Route path="barang-keluar" element={<BarangKeluar />} />
         </Route>
       </Routes>
     </BrowserRouter>

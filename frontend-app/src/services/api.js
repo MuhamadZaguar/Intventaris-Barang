@@ -28,3 +28,21 @@ export const barangService = {
     return await api.get('/barang');
   }
 };
+
+export const barangMasukService = {
+  getAll: async () => {
+    return await api.get('/barang-masuk');
+  },
+  create: async (payload) => {
+    return await api.post('/barang-masuk', payload);
+  }
+};
+
+export const barangKeluarService = {
+  getAll: async () => {
+    return await api.get('/barang-keluar');
+  },
+  create: async (payload) => {
+    return await api.post('/barang-keluar', payload);
+  }
+};
