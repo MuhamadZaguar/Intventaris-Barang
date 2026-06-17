@@ -159,6 +159,22 @@ const Barang = () => {
                       alert('Gagal mengekspor PDF');
                     }
                   }}>Export PDF</button>
+                  <button className="btn btn-sm btn-outline-success" onClick={async () => {
+                    try {
+                      const res = await barangService.exportExcel({ search: searchTerm, kategori: filterKategori });
+                      const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'barang-list.xlsx';
+                      document.body.appendChild(a);
+                      a.click();
+                      a.remove();
+                      window.URL.revokeObjectURL(url);
+                    } catch (err) {
+                      console.error('Export Excel gagal', err);
+                      alert('Gagal mengekspor Excel');
+                    }
+                  }}>Export Excel</button>
                 </div>
               </div>
 

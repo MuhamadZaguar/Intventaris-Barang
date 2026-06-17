@@ -2,7 +2,28 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 /* Minimal custom styles to keep some spacing similar to original design */
-body { background-color: #f8f9fa; }
+:root{
+	--bg: #f8f9fa;
+	--surface: #ffffff;
+	--text: #212529;
+	--muted: #6c757d;
+	--primary: #0d6efd;
+}
+
+:root[data-theme='dark']{
+	--bg: #0b1220;
+	--surface: #0f1724;
+	--text: #e6eef8;
+	--muted: #98a0b3;
+	--primary: #66a3ff;
+}
+
+body { background-color: var(--bg); color: var(--text); }
 .app-container { padding: 2rem; }
-.card-rounded { border-radius: 1rem; }
+.card-rounded { border-radius: 1rem; background: var(--surface); color: var(--text); }
 .sidebar { min-width: 240px; }
+
+/* small helpers to invert bootstrap backgrounds */
+.navbar, .card { background: var(--surface) !important; color: var(--text) !important; }
+.bg-light { background-color: var(--surface) !important; }
+.text-muted { color: var(--muted) !important; }

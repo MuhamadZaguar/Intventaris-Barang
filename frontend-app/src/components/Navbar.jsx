@@ -2,10 +2,12 @@ import { Bell } from 'lucide-react';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const handleLogout = () => {
     logout();
@@ -23,6 +25,10 @@ const Navbar = () => {
           <button className="btn btn-link position-relative text-secondary">
             <Bell />
             <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"></span>
+          </button>
+
+          <button className="btn btn-sm btn-outline-secondary" onClick={toggleTheme} title="Toggle theme">
+            {theme === 'dark' ? 'Light' : 'Dark'}
           </button>
 
           <div className="d-flex align-items-center">

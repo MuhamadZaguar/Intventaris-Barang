@@ -35,6 +35,11 @@ export const barangService = {
   }
 };
 
+// Excel export wrapper (blob)
+barangService.exportExcel = async (params = {}) => {
+  return await api.get('/barang/export/excel', { params, responseType: 'blob' });
+};
+
 export const barangAdminService = {
   create: async (payload) => {
     // if payload is FormData (has append), send as multipart/form-data
