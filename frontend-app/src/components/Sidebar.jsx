@@ -35,11 +35,7 @@ const Sidebar = () => {
         })}
       </nav>
 
-      <div className="mt-auto pt-3">
-        <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center">
-          <LogOut className="me-2" /> Logout
-        </button>
-      </div>
+      {/* logout removed per user request - handled in Navbar */}
     </div>
   );
 };
