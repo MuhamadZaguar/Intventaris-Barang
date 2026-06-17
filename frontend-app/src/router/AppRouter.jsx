@@ -26,8 +26,8 @@ const AppRouter = () => {
         {/* Rute Dashboard yang menggunakan Layout Utama */}
   <Route path="/" element={<RequireAuth><DashboardLayout /></RequireAuth>}>
           {/* Jika akses ke "/", otomatis diarahkan ke /dashboard */}
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<DashboardSummary />} />
+          <Route index element={<Navigate to="/dashboard" replace />} /> {/* Redirect root to /dashboard */}
+          <Route path="dashboard" element={<Dashboard />} /> {/* Use the main Dashboard component */}
           <Route path="dashboard/transactions" element={<DashboardTransactions />} />
           <Route path="dashboard/stock" element={<DashboardStock />} />
           

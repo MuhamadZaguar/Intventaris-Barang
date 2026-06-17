@@ -1,13 +1,23 @@
-// src/services/api.js
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:5000/api';
 
-const api = axios.create({ baseURL: BASE_URL });
+const api = axios.create({
+  baseURL: BASE_URL
+});
 
-// export axios instance for callers that need it
+// otomatis kirim token
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 export default api;
-
 export const authService = {
   login: async (credentials) => {
     return await api.post('/auth/login', credentials);
@@ -18,6 +28,11 @@ export const authService = {
 };
 
 export const dashboardService = {
+  // overview totals (totalBarang, totalUser, totalMasuk, totalKeluar)
+  getOverview: async () => {
+    return await api.get('/dashboard');
+  },
+  // detailed stats for charts
   getStats: async () => {
     return await api.get('/dashboard');
   }
