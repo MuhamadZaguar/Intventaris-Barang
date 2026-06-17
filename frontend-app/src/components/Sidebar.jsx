@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ onItemClick }) => {
   const location = useLocation();
 
   const menuItems = [
@@ -23,6 +23,7 @@ const Sidebar = () => {
               key={item.path} 
               to={item.path} 
               className={`nav-link d-flex align-items-center mb-1 ${isActive ? 'active' : 'text-dark hover-bg-light'}`}
+              onClick={onItemClick}
             >
               <Icon size={18} className="me-2" />
               {item.label}

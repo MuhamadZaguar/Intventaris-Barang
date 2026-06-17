@@ -1,10 +1,10 @@
-import { Bell, Sun, Moon, PackageSearch } from 'lucide-react';
+import { Bell, Sun, Moon, PackageSearch, Menu } from 'lucide-react';
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,6 +33,11 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand navbar-light bg-white px-3" style={{ height: '64px' }}>
       <div className="container-fluid">
+        {/* Tombol Hamburger Mobile */}
+        <button className="btn btn-link text-dark d-lg-none me-2 p-0" onClick={onToggleSidebar}>
+          <Menu size={24} />
+        </button>
+
         {/* Brand/Logo dipindah ke Navbar */}
         <Link to="/dashboard" className="navbar-brand d-flex align-items-center text-decoration-none text-dark me-4">
           <div className="bg-primary text-white p-2 rounded me-2 d-flex align-items-center">
