@@ -4,16 +4,16 @@ import { Package, ArrowDownRight, ArrowUpRight, AlertTriangle, Clock } from 'luc
 import { dashboardService } from '../services/api';
 import DashboardCharts from '../components/DashboardCharts';
 
-// --- Komponen Mini: StatCard (defined here for Tailwind styling) ---
+// --- Komponen Mini: StatCard (Bootstrap Version) ---
 const StatCard = ({ title, value, Icon, color, bg }) => (
-  <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300">
-    <div className="flex items-center justify-between">
+  <div className="card border-0 shadow-sm rounded-3 h-100">
+    <div className="card-body d-flex align-items-center justify-content-between p-4">
       <div>
-        <p className="text-sm font-semibold text-gray-500 mb-1">{title}</p>
-        <p className="text-3xl font-extrabold text-gray-900">{value}</p>
+        <p className="text-muted small fw-bold text-uppercase mb-1">{title}</p>
+        <h3 className="fw-bold mb-0 text-dark">{value}</h3>
       </div>
-      <div className={`p-4 rounded-xl ${bg}`}>
-        <Icon className={`w-7 h-7 ${color}`} strokeWidth={2.5} />
+      <div className={`p-3 rounded-3 ${bg}`}>
+        <Icon className={color} size={32} />
       </div>
     </div>
   </div>

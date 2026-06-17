@@ -1,7 +1,7 @@
-import { Bell, Sun, Moon } from 'lucide-react';
+import { Bell, Sun, Moon, PackageSearch } from 'lucide-react';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
@@ -15,9 +15,19 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand navbar-light bg-white px-4 h-100">
+    <nav className="navbar navbar-expand navbar-light bg-white px-3" style={{ height: '64px' }}>
       <div className="container-fluid">
-        <form className="d-none d-md-flex w-25">
+        {/* Brand/Logo dipindah ke Navbar */}
+        <Link to="/dashboard" className="navbar-brand d-flex align-items-center text-decoration-none text-dark me-4">
+          <div className="bg-primary text-white p-2 rounded me-2 d-flex align-items-center">
+            <PackageSearch size={20} />
+          </div>
+          <span className="fw-bold">Stock<span className="text-primary">ify</span></span>
+        </Link>
+
+        <div className="vr d-none d-lg-block me-4" style={{ height: '30px' }}></div>
+
+        <form className="d-none d-md-flex flex-grow-1 max-w-sm me-auto">
           <input className="form-control form-control-sm border-0 bg-light" type="search" placeholder="Cari data..." />
         </form>
 

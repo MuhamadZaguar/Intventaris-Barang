@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight, LogOut, PackageSearch } from 'lucide-react';
+import { LayoutGrid, Package, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -12,16 +12,8 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="d-flex flex-column h-100 p-3">
-      <Link to="/dashboard" className="d-flex align-items-center mb-4 text-decoration-none text-dark">
-        <div className="bg-primary text-white p-2 rounded me-2">
-          <PackageSearch size={24} />
-        </div>
-        <span className="fs-4 fw-bold">Stock<span className="text-primary">ify</span></span>
-      </Link>
-
-      <hr />
-
+    <div className="d-flex flex-column h-100 p-2 py-3">
+      <p className="text-muted small fw-bold px-3 text-uppercase mb-2">Menu Utama</p>
       <nav className="nav nav-pills flex-column mb-auto">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;

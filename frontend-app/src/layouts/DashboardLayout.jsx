@@ -4,16 +4,19 @@ import Navbar from '../components/Navbar';
 
 const DashboardLayout = () => {
   return (
-    <div className="d-flex vh-100 overflow-hidden bg-light">
-      <aside className="bg-white border-end d-none d-lg-block" style={{ width: '280px' }}>
-        <Sidebar />
-      </aside>
+    <div className="d-flex flex-column vh-100 bg-light">
+      {/* Navbar di atas membentang penuh */}
+      <header className="bg-white border-bottom shadow-sm z-3">
+        <Navbar />
+      </header>
 
-      <div className="flex-grow-1 d-flex flex-col min-w-0">
-        <header className="bg-white border-bottom">
-          <Navbar />
-        </header>
+      <div className="d-flex flex-grow-1 overflow-hidden">
+        {/* Sidebar di samping di bawah Navbar */}
+        <aside className="bg-white border-end d-none d-lg-block" style={{ width: '260px' }}>
+          <Sidebar />
+        </aside>
 
+        {/* Konten Utama */}
         <main className="flex-grow-1 overflow-auto p-4">
           <div className="container-fluid">
             <Outlet />
