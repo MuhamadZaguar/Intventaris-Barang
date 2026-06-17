@@ -29,7 +29,7 @@ const AppRouter = () => {
           {/* Jika akses ke "/", otomatis diarahkan ke /dashboard */}
           <Route index element={<Navigate to="/dashboard" replace />} /> {/* Redirect root to /dashboard */}
           <Route path="dashboard" element={
-            <RequireAuth allowedRoles={['admin', 'staff', 'manager']}>
+            <RequireAuth allowedRoles={['admin', 'staff', 'manager', 'karyawan']}>
               <Dashboard />
             </RequireAuth>
           } />

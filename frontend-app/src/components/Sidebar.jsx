@@ -8,11 +8,12 @@ const Sidebar = ({ onItemClick }) => {
   const location = useLocation();
 
   const menuItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: LayoutGrid, roles: ['admin', 'staff', 'manager'] },
+    { path: '/dashboard', label: 'Dashboard', icon: LayoutGrid, roles: ['admin', 'staff', 'manager', 'karyawan'] },
     { path: '/barang', label: 'Data Barang', icon: Package, roles: ['staff'] },
     { path: '/barang-masuk', label: 'Barang Masuk', icon: ArrowDownLeft, roles: ['staff'] },
     { path: '/barang-keluar', label: 'Barang Keluar', icon: ArrowUpRight, roles: ['staff'] },
     { path: '/users', label: 'Manajemen User', icon: Users, roles: ['admin'] },
+    { path: '/permintaan', label: 'Permintaan Barang', icon: Package, roles: ['karyawan'] },
   ];
 
   // Filter menu berdasarkan role user

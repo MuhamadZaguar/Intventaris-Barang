@@ -89,6 +89,7 @@ export default function Register() {
 									<Form.Label>Role</Form.Label>
 									<Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
 										<option value="staff">Staff</option>
+										<option value="karyawan">Karyawan</option>
 										<option value="manager">Manager</option>
 										<option value="admin">Admin</option>
 									</Form.Select>

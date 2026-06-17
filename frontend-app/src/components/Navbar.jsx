@@ -1,4 +1,4 @@
-import { Bell, Sun, Moon, PackageSearch, Menu } from 'lucide-react';
+import { Sun, Moon, PackageSearch, Menu } from 'lucide-react';
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link, useLocation, useSearchParams } from 'react-router-dom';
@@ -67,11 +67,6 @@ const Navbar = ({ onToggleSidebar }) => {
             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
 
-          <button className="btn btn-link text-secondary position-relative me-3">
-            <Bell size={20} />
-            <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
-          </button>
-
           <div className="vr me-3 d-none d-sm-block"></div>
 
           <div className="d-flex align-items-center me-3 d-none d-sm-block text-end">
@@ -80,6 +75,7 @@ const Navbar = ({ onToggleSidebar }) => {
               {user?.role === 'admin' ? 'Administrator' :
                user?.role === 'staff' ? 'Staff Gudang' : 
                user?.role === 'manager' ? 'Manajer' : 
+               user?.role === 'karyawan' ? 'Karyawan' :
                user?.role || 'Guest'}
             </p>
           </div>

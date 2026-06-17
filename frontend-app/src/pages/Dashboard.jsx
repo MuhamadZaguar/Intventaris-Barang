@@ -143,7 +143,8 @@ const Dashboard = () => {
           Anda masuk sebagai <span className="badge bg-primary-subtle text-primary border border-primary-subtle">
             {user?.role === 'admin' ? 'Administrator' : 
              user?.role === 'staff' ? 'Staff Gudang' : 
-             user?.role === 'manager' ? 'Manajer' : user?.role || 'Guest'}
+             user?.role === 'manager' ? 'Manajer' : 
+             user?.role === 'karyawan' ? 'Karyawan' : user?.role || 'Guest'}
           </span>.
         </p>
       </div>
