@@ -12,30 +12,32 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="d-flex flex-column h-100">
-      <div className="mb-4">
-        <Link to="/dashboard" className="d-flex align-items-center text-decoration-none text-dark">
-          <div className="bg-primary text-white p-2 rounded me-2">
-            <PackageSearch />
-          </div>
-          <h4 className="mb-0">Stock<span className="text-primary">ify</span></h4>
-        </Link>
-      </div>
+    <div className="d-flex flex-column h-100 p-3">
+      <Link to="/dashboard" className="d-flex align-items-center mb-4 text-decoration-none text-dark">
+        <div className="bg-primary text-white p-2 rounded me-2">
+          <PackageSearch size={24} />
+        </div>
+        <span className="fs-4 fw-bold">Stock<span className="text-primary">ify</span></span>
+      </Link>
 
-      <nav className="nav flex-column">
+      <hr />
+
+      <nav className="nav nav-pills flex-column mb-auto">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
           return (
-            <Link key={item.path} to={item.path} className={`nav-link d-flex align-items-center py-2 text-sm ${isActive ? 'active fw-bold' : 'text-muted'}`}>
-              <Icon className="me-2" />
+            <Link 
+              key={item.path} 
+              to={item.path} 
+              className={`nav-link d-flex align-items-center mb-1 ${isActive ? 'active' : 'text-dark hover-bg-light'}`}
+            >
+              <Icon size={18} className="me-2" />
               {item.label}
             </Link>
           );
         })}
       </nav>
-
-      {/* logout removed per user request - handled in Navbar */}
     </div>
   );
 };

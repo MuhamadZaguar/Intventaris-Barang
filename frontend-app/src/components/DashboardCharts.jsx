@@ -5,7 +5,11 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
 
 const DashboardCharts = ({ pieData, lineData }) => {
-  if (!pieData || !lineData) return <p className="text-muted text-center py-4">Memuat grafik...</p>;
+  if (!pieData || !lineData) return (
+    <div className="d-flex align-items-center justify-content-center py-5 text-muted small font-italic">
+      Memuat grafik...
+    </div>
+  );
 
   const finalPieData = {
     labels: pieData.labels,
@@ -24,14 +28,18 @@ const DashboardCharts = ({ pieData, lineData }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="card-rounded p-4">
-        <h5 className="mb-3">Kategori Barang</h5>
-        <Pie data={finalPieData} />
+    <div className="row g-4">
+      <div className="col-12 mb-4 text-center">
+        <p className="text-muted small fw-bold text-uppercase mb-3">Kategori Barang</p>
+        <div style={{ maxHeight: '200px' }} className="d-flex justify-content-center">
+          <Pie data={finalPieData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }} />
+        </div>
       </div>
-      <div className="card-rounded p-4">
-        <h5 className="mb-3">Transaksi Bulanan (6 bulan terakhir)</h5>
-        <Line data={finalLineData} />
+      <div className="col-12">
+        <p className="text-muted small fw-bold text-uppercase mb-3">Tren Transaksi</p>
+        <div style={{ maxHeight: '180px' }}>
+          <Line data={finalLineData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } } }} />
+        </div>
       </div>
     </div>
   );

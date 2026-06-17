@@ -39,23 +39,23 @@ const formatTimeAgo = (dateString) => {
 const TransactionItem = ({ trx }) => {
   const isMasuk = trx.type === 'Masuk';
   return (
-    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-50 bg-gray-50/50 hover:bg-gray-100 transition-colors duration-200">
-      <div className="flex items-center gap-4">
-        <div className={`p-2.5 rounded-lg ${isMasuk ? 'bg-emerald-100 text-emerald-600' : 'bg-orange-100 text-orange-600'}`}>
-          {isMasuk ? <ArrowDownRight size={22} /> : <ArrowUpRight size={22} />}
+    <div className="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 border-0 border-bottom">
+      <div className="d-flex align-items-center">
+        <div className={`p-2 rounded-3 me-3 ${isMasuk ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning'}`}>
+          {isMasuk ? <ArrowDownRight size={20} /> : <ArrowUpRight size={20} />}
         </div>
         <div>
-          <p className="text-sm font-bold text-gray-900">{trx.item}</p>
-          <p className="text-xs text-gray-500 mt-1 flex items-center gap-1.5">
+          <p className="mb-0 fw-bold small text-dark">{trx.item}</p>
+          <p className="mb-0 text-muted" style={{ fontSize: '0.75rem' }}>
             <Clock size={12} /> {formatTimeAgo(trx.createdAt)}
           </p>
         </div>
       </div>
       <div className="text-right">
-        <p className={`text-sm font-extrabold ${isMasuk ? 'text-emerald-600' : 'text-orange-600'}`}>
+        <p className={`mb-0 fw-bold ${isMasuk ? 'text-success' : 'text-danger'}`}>
           {isMasuk ? '+' : '-'}{trx.qty} Unit
         </p>
-        <p className="text-[11px] font-semibold text-gray-400 mt-1 uppercase tracking-wider">{trx._id}</p>
+        <p className="mb-0 text-muted fw-bold" style={{ fontSize: '0.6rem' }}>#{trx._id.substring(0,8)}</p>
       </div>
     </div>
   );
@@ -81,10 +81,10 @@ const Dashboard = () => {
 
         // Set summary stats
         setStats([
-          { id: 1, title: 'Total Barang', value: (d.totalBarang || 0).toLocaleString(), Icon: Package, color: 'text-blue-600', bg: 'bg-blue-50' },
-          { id: 2, title: 'Total Pengguna', value: (d.totalUser || 0).toLocaleString(), Icon: ArrowDownRight, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-          { id: 3, title: 'Barang Masuk', value: (d.totalMasuk || 0).toLocaleString(), Icon: ArrowDownRight, color: 'text-orange-600', bg: 'bg-orange-50' },
-          { id: 4, title: 'Barang Keluar', value: (d.totalKeluar || 0).toLocaleString(), Icon: ArrowUpRight, color: 'text-rose-600', bg: 'bg-rose-50' },
+          { id: 1, title: 'Total Barang', value: (d.totalBarang || 0).toLocaleString(), Icon: Package, color: 'text-primary', bg: 'bg-primary-subtle' },
+          { id: 2, title: 'Total Pengguna', value: (d.totalUser || 0).toLocaleString(), Icon: ArrowDownRight, color: 'text-success', bg: 'bg-success-subtle' },
+          { id: 3, title: 'Barang Masuk', value: (d.totalMasuk || 0).toLocaleString(), Icon: ArrowDownRight, color: 'text-warning', bg: 'bg-warning-subtle' },
+          { id: 4, title: 'Barang Keluar', value: (d.totalKeluar || 0).toLocaleString(), Icon: ArrowUpRight, color: 'text-danger', bg: 'bg-danger-subtle' },
         ]);
 
         // Prepare data for Pie Chart
@@ -118,62 +118,56 @@ const Dashboard = () => {
   }, []);
 
   if (loading) return (
-    <div className="flex h-[80vh] items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    <div className="d-flex vh-100 align-items-center justify-content-center">
+      <div className="spinner-border text-primary" role="status"></div>
     </div>
   );
 
   if (errorMsg) return (
-    <div className="container py-4">
+    <div className="container-fluid py-4">
       <div className="alert alert-danger">{errorMsg}</div>
     </div>
   );
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="row g-4">
       {/* Header Halaman */}
-      <div>
-        <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Ringkasan Inventori</h2>
-        <p className="mt-1.5 text-sm text-gray-500 font-medium">Selamat datang kembali, Admin! Berikut ikhtisar data hari ini.</p>
+      <div className="col-12">
+        <h2 className="fw-bold text-dark h4 mb-1">Ringkasan Inventori</h2>
+        <p className="text-muted small">Selamat datang kembali! Berikut ikhtisar data hari ini.</p>
       </div>
 
       {/* Statistik Utama - Grid Kartu */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => (
-          <StatCard key={stat.id} {...stat} />
-        ))}
-      </div>
+      {stats.map((stat) => (
+        <div key={stat.id} className="col-12 col-sm-6 col-xl-3">
+          <StatCard {...stat} />
+        </div>
+      ))}
 
       {/* Bagian Bawah - 2 Kolom */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-        
-        {/* Kolom Kiri: Transaksi Terbaru (Lebih Lebar) */}
-        <div className="xl:col-span-2 bg-white p-7 rounded-2xl border border-gray-100 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-gray-900">Aktivitas Transaksi Terbaru</h3>
-            <button className="text-sm font-semibold text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors">
-              Lihat Semua
-            </button>
-          </div>
-          
-          <div className="space-y-3">
-            {recentTransactions.map((trx) => (
-              <TransactionItem key={trx._id} trx={trx} />
-            ))}
+      <div className="col-xl-8">
+        <div className="card border-0 shadow-sm h-100">
+          <div className="card-body p-4">
+            <div className="d-flex align-items-center justify-content-between mb-4">
+              <h5 className="fw-bold mb-0">Transaksi Terbaru</h5>
+              <button className="btn btn-sm btn-link text-decoration-none fw-bold">Lihat Semua</button>
+            </div>
+            <div className="list-group list-group-flush">
+              {recentTransactions.map((trx) => (
+                <TransactionItem key={trx._id} trx={trx} />
+              ))}
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Kolom Kanan: Ringkasan Stok & Placeholder Grafik */}
-        <div className="bg-white p-7 rounded-2xl border border-gray-100 shadow-sm flex flex-col min-h-[350px]">
-          <h3 className="text-lg font-bold text-gray-900 mb-6">Distribusi Stok</h3>
-          
-          <div className="flex-1 bg-gradient-to-br from-gray-50 to-gray-100/50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center p-8">
-              <div className="flex-1">
-                <DashboardCharts pieData={pieChartData} lineData={lineChartData} />
-              </div>
+      <div className="col-xl-4">
+        <div className="card border-0 shadow-sm h-100">
+          <div className="card-body p-4">
+            <h5 className="fw-bold mb-4">Visualisasi Data</h5>
+            <DashboardCharts pieData={pieChartData} lineData={lineChartData} />
           </div>
         </div>
-
       </div>
     </div>
   );
