@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { permintaanService } from '../services/api';
 import { Table, Button, Badge, Alert, Spinner } from 'react-bootstrap';
 import { Check, X } from 'lucide-react';
+import { AuthContext } from '../context/AuthContext';
 
 const KelolaPermintaan = () => {
+  const { user } = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -69,7 +71,7 @@ const KelolaPermintaan = () => {
                       </Badge>
                     </td>
                     <td>
-                      {req.status === 'Pending' && (
+                      {req.status === 'Pending' && user?.role === 'staff' && (
                         <div className="d-flex gap-2">
                           <Button variant="success" size="sm" onClick={() => handleAction(req._id, 'Approved')}>
                             <Check size={14} /> Terima

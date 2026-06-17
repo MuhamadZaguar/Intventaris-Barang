@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { barangService, barangMasukService } from '../services/api';
+import { AuthContext } from '../context/AuthContext';
 
 const BarangMasuk = () => {
+		const { user } = useContext(AuthContext);
 		const [barangList, setBarangList] = useState([]);
 		const [selectedBarang, setSelectedBarang] = useState('');
 		const [kodeSearch, setKodeSearch] = useState('');
@@ -73,6 +75,7 @@ const BarangMasuk = () => {
 		<div className="container py-4">
 			<h2>Barang Masuk</h2>
 
+			{user?.role === 'staff' && (
 			<div className="card mb-4">
 				<div className="card-body">
 					<form onSubmit={handleSubmit}>
@@ -105,6 +108,7 @@ const BarangMasuk = () => {
 					</form>
 				</div>
 			</div>
+			)}
 
 			<div>
 				<h5>Transaksi Terakhir</h5>
